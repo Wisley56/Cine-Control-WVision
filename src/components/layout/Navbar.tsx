@@ -27,7 +27,7 @@ export default function Navbar() {
             color: 'var(--primary-accent)',
           }}
         >
-          CineControl WVison
+          WVison Cine Manager
         </Link>
         <ul className="flex items-center space-x-3 md:space-x-5">
           {navLinks.map((link) => {

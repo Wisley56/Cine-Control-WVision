@@ -45,38 +45,7 @@
 }
 
 body {
-  background-color: var(--background); /* Corrigido para background-color */
+  background-color: var(--background);
   color: var(--foreground);
   font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
 }
-
-/* Exemplos de como você poderia usar essas variáveis em outros seletores (opcional):
-
-a {
-  color: var(--primary-accent);
-  text-decoration: none;
-}
-
-a:hover {
-  color: var(--primary-accent-hover);
-}
-
-button, .button {
-  background-color: var(--primary-accent);
-  color: var(--background); 
-  padding: 0.5em 1em;
-  border: none;
-  border-radius: 4px;
-}
-
-button:hover, .button:hover {
-  background-color: var(--primary-accent-hover);
-}
-
-.card {
-  background-color: var(--card-background);
-  border: 1px solid var(--border-color);
-  padding: 1rem;
-  border-radius: 8px;
-}
-*/

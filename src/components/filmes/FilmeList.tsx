@@ -51,7 +51,7 @@ export default function FilmeList() {
                 <img
                   src={filme.imagemUrl || 'https://via.placeholder.com/300x400?text=Sem+Imagem'}
                   alt={`Poster do filme ${filme.titulo}`}
-                  className="h-full w-full object-cover object-center group-hover:opacity-75 transition-opacity duration-300" // Adicionado transition para opacidade
+                  className="h-full w-full object-cover object-center group-hover:opacity-75 transition-opacity duration-300" 
                 />
               </div>
               <div className="p-4">

@@ -33,7 +33,7 @@ export default function Home() {
       ) : (
         <div className="text-center flex flex-col justify-center flex-grow">
           <h1 className="text-5xl font-bold text-[var(--primary-accent)] mb-4">
-            Bem-vindo ao CineControl WVision!
+            Bem-vindo ao WVision Cine Manager!
           </h1>
           <p className="text-xl text-[var(--muted-text)] mb-8">
             Sua plataforma para gerenciar filmes, salas e sessões de cinema.

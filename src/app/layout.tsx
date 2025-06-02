@@ -3,7 +3,7 @@ import Navbar from "@/components/layout/Navbar";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: 'CineControl WVision',
+  title: 'WVision Cine Manager',
   description: 'Sua plataforma para gerenciar filmes, salas e sessões de cinema.',
   };
 

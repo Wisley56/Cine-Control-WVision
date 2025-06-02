@@ -1,6 +1,6 @@
-# CineControl WVision 🎬
+# WVision Cine Manager 🎬
 
-Bem-vindo ao CineControl! Uma aplicação web moderna desenvolvida para gerenciar filmes, salas de cinema, sessões e venda de ingressos. Este projeto foi construído com Next.js, TypeScript e Tailwind CSS, e utiliza o `localStorage` do navegador para persistência de dados.
+Bem-vindo ao WVsion! Uma aplicação web moderna desenvolvida para gerenciar filmes, salas de cinema, sessões e venda de ingressos. Este projeto foi construído com Next.js, TypeScript e Tailwind CSS, e utiliza o `localStorage` do navegador para persistência de dados.
 
 ## ✨ Principais Funcionalidades
 
