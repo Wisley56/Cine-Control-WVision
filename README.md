@@ -1,4 +1,4 @@
-# CineControl 🎬
+# CineControl WVision 🎬
 
 Bem-vindo ao CineControl! Uma aplicação web moderna desenvolvida para gerenciar filmes, salas de cinema, sessões e venda de ingressos. Este projeto foi construído com Next.js, TypeScript e Tailwind CSS, e utiliza o `localStorage` do navegador para persistência de dados.
 
@@ -42,7 +42,7 @@ Siga estas instruções para configurar e rodar o projeto localmente.
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [git@github.com:Wisley56/Cine-Control-WVision.git](https://github.com/Wisley56/Cine-Control-WVision)
+    git clone git@github.com:Wisley56/Cine-Control-WVision.git
     cd Cinema-React
     ```
 
