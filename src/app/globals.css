@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0D1B2A; /* Azul Marinho Bem Escuro / Quase Preto Azulado */
+  --foreground: #E0E6F1; /* Azul Muito Claro / Cinza Azulado (para texto principal) */
+
+  --primary-accent: #58A6FF; /* Azul Brilhante (para links, botões primários, ícones) */
+  --primary-accent-hover: #82BBFF; /* Azul Mais Claro (para hover do primário) */
+  
+  --secondary-accent: #3D5A80; /* Azul Aço / Azul Médio Escuro (para elementos secundários, bordas) */
+  --secondary-accent-hover: #5A7D9A; /* Variação para hover do secundário */
+
+  --danger-accent: #E53E3E;
+  --danger-accent-hover: #C53030;
+
+  --card-background: #1C2B3A; /* Azul Escuro (para fundos de cards, seções) */
+  --border-color: #2A3B4C; /* Azul Um Pouco Mais Claro que o Card (para bordas sutis) */
+  
+  --muted-text: #A0AEC0; /* Cinza Azulado (para texto secundário, placeholders) */
+  --highlight-text: #88C0D0; /* Azul Ciano Claro (para destaques de texto ou ícones específicos) */
+
+
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0D1B2A;
+    --foreground: #E0E6F1;
+
+    --primary-accent: #58A6FF;
+    --primary-accent-hover: #82BBFF;
+    
+    --secondary-accent: #3D5A80;
+    --secondary-accent-hover: #5A7D9A;
+
+    --danger-accent: #E53E3E;
+    --danger-accent-hover: #C53030; 
+
+    --card-background: #1C2B3A;
+    --border-color: #2A3B4C;
+    
+    --muted-text: #A0AEC0;
+    --highlight-text: #88C0D0; 
+  }
+}
+
+body {
+  background-color: var(--background); /* Corrigido para background-color */
+  color: var(--foreground);
+  font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Exemplos de como você poderia usar essas variáveis em outros seletores (opcional):
+
+a {
+  color: var(--primary-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--primary-accent-hover);
+}
+
+button, .button {
+  background-color: var(--primary-accent);
+  color: var(--background); 
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 4px;
+}
+
+button:hover, .button:hover {
+  background-color: var(--primary-accent-hover);
+}
+
+.card {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  border-radius: 8px;
+}
+*/
