@@ -42,8 +42,8 @@ Siga estas instruções para configurar e rodar o projeto localmente.
 
 1.  **Clone o repositório:**
     ```bash
-    git clone git@github.com:Wisley56/Cine-Control-WVision.git
-    cd Cinema-React
+    git clone git@github.com:Wisley56/WVision-Cine-Manager.git
+    cd WVision-Cine-Manager
     ```
 
 2.  **Instale as dependências:**
