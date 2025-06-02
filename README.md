@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CineControl 🎬
 
-## Getting Started
+Bem-vindo ao CineControl! Uma aplicação web moderna desenvolvida para gerenciar filmes, salas de cinema, sessões e venda de ingressos. Este projeto foi construído com Next.js, TypeScript e Tailwind CSS, e utiliza o `localStorage` do navegador para persistência de dados.
 
-First, run the development server:
+## ✨ Principais Funcionalidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+* **Gerenciamento de Filmes:** Cadastro, listagem e visualização de detalhes dos filmes.
+* **Gerenciamento de Salas:** Cadastro e listagem de salas de cinema.
+* **Gerenciamento de Sessões:** Cadastro e listagem de sessões (horários dos filmes nas salas).
+* **Venda de Ingressos:** Formulário para simular a venda de ingressos para sessões específicas.
+* **Homepage Dinâmica:** Apresenta um carrossel com filmes em destaque (se houver filmes suficientes cadastrados).
+* **Interface Responsiva:** Adaptada para diferentes tamanhos de tela.
+* **Tema Escuro Personalizado:** Uma interface elegante com um tema escuro e variações de tons azuis, implementado com variáveis CSS customizadas.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tecnologias Utilizadas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* **Framework:** [Next.js](https://nextjs.org/) (v13+ com App Router)
+* **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
+* **Estilização:** [Tailwind CSS](https://tailwindcss.com/)
+* **Componentização:** [React](https://reactjs.org/)
+* **Formulários:**
+    * [React Hook Form](https://react-hook-form.com/)
+    * [Yup](https://github.com/jquense/yup) (para validação de schemas)
+* **Carrossel:** [Swiper.js](https://swiperjs.com/)
+* **Ícones:** [Font Awesome](https://fontawesome.com/) (via `@fortawesome/react-fontawesome`)
+* **Utilitários:**
+    * `clsx` (para construção condicional de classNames)
+    * `uuid` (para geração de IDs únicos)
+* **Persistência de Dados:** `localStorage` do navegador (através de um `localStorageManager` customizado).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Começando
 
-## Learn More
+Siga estas instruções para configurar e rodar o projeto localmente.
 
-To learn more about Next.js, take a look at the following resources:
+### Pré-requisitos
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* [Node.js](https://nodejs.org/) (versão LTS recomendada, que inclui npm)
+* [Yarn](https://yarnpkg.com/) (opcional, pode usar npm)
+* [Git](https://git-scm.com/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Instalação
 
-## Deploy on Vercel
+1.  **Clone o repositório:**
+    ```bash
+    git clone [git@github.com:Wisley56/Cine-Control-WVision.git](https://github.com/Wisley56/Cine-Control-WVision)
+    cd Cinema-React
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2.  **Instale as dependências:**
+    Usando npm:
+    ```bash
+    npm install
+    ```
+    Ou usando Yarn:
+    ```bash
+    yarn install
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3.  **Variáveis de Ambiente (Opcional - se aplicável a outras partes do projeto):**
+    Se o projeto utilizar APIs externas que requerem chaves (como a API do TMDB mencionada no README original do seu repositório), crie um arquivo `.env.local` na raiz do projeto e adicione as chaves necessárias. Exemplo:
+    ```env
+    NEXT_PUBLIC_TMDB_API_KEY=SUA_CHAVE_API_AQUI
+    ```
+    *Obs: As funcionalidades que revisamos e estilizamos utilizam principalmente o `localStorage` para os dados de filmes, salas, sessões e ingressos.*
+
+### Rodando o Projeto
+
+1.  **Inicie o servidor de desenvolvimento:**
+    Usando npm:
+    ```bash
+    npm run dev
+    ```
+    Ou usando Yarn:
+    ```bash
+    yarn dev
+    ```
+
+2.  Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver a aplicação.
+
+## 🎨 Tema
+
+O projeto apresenta um tema escuro customizado com uma paleta de cores focada em tons de azul e cinzas escuros. As cores são gerenciadas através de variáveis CSS (custom properties) definidas no arquivo de estilo global (`src/app/globals.css` ou similar), permitindo fácil customização e consistência visual em toda a aplicação.
