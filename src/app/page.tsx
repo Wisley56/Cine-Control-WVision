@@ -40,7 +40,7 @@ export default function Home() {
           </p>
           {filmes.length === 0 && (
              <p className="text-md sm:text-lg text-[var(--foreground)] opacity-75">
-              Nenhum filme cadastrado ainda. Que tal adicionar alguns?
+              Nenhum filme cadastrado ainda. Adicione seus filmes para começar a gerenciar suas sessões de cinema!
             </p>
           )}
         </div>
