@@ -1,6 +1,9 @@
+// src/app/venda-ingressos/page.tsx
 'use client';
 
 import IngressoForm from '@/components/ingressos/IngressosForm';
+import Loader from '@/components/layout/Loader'; 
+import { Suspense } from 'react';
 
 export default function VendaIngressosPage() {
   return (
@@ -12,7 +15,9 @@ export default function VendaIngressosPage() {
         <p className="mb-6 sm:mb-8 text-xs sm:text-sm text-[var(--muted-text)] text-center">
           Preencha os dados abaixo para realizar a venda de ingressos.
         </p>
-        <IngressoForm />
+        <Suspense fallback={<Loader message="Carregando formulário..." />}>
+          <IngressoForm />
+        </Suspense>
       </div>
     </div>
   );
