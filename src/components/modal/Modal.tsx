@@ -45,7 +45,7 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
       onClick={handleBackgroundClick}
       className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-[var(--background)]/80 p-4"
     >
-      <div className="bg-[var(--card-background)] rounded-lg shadow-xl p-5 sm:p-6 max-w-lg w-full relative border border-[var(--border-color)]">
+      <div className="bg-[var(--card-background)] rounded-lg shadow-xl p-5 sm:p-6 max-w-lg w-full relative border border-[var(--border-color)] max-h-[85vh] overflow-y-auto">
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-[var(--muted-text)] hover:text-[var(--foreground)] text-2xl leading-none p-1 rounded-full transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--primary-accent)]"
