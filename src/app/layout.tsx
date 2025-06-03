@@ -14,10 +14,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body
-      >
+      <body className="antialiased"> 
         <Navbar/>
-        {children}
+        <div className="pt-[68px] md:pt-[68px]"> 
+                                                
+          {children}
+        </div>
       </body>
     </html>
   );

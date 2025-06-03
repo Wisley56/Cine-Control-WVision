@@ -3,11 +3,11 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Ingresso } from '@/interfaces/ingresso';
-import { localStorageManager } from '@/lib/localStorageManager'; 
+import { localStorageManager } from '@/lib/localStorageManager';
 import { v4 as uuidv4 } from 'uuid';
 import Button from '@/components/buttons/Button';
 import Loader from '@/components/layout/Loader';
-import Modal from '../modal/Modal'; 
+import Modal from '../modal/Modal';
 
 export default function IngressoForm() {
   const searchParams = useSearchParams();
@@ -32,9 +32,9 @@ export default function IngressoForm() {
   useEffect(() => {
     if (sessaoIdFromUrl) {
       setLoading(true);
-      const sessoes = localStorageManager.getSessoes(); 
-      const filmes = localStorageManager.getFilmes(); 
-      const salas = localStorageManager.getSalas(); 
+      const sessoes = localStorageManager.getSessoes();
+      const filmes = localStorageManager.getFilmes();
+      const salas = localStorageManager.getSalas();
 
       const sessao = sessoes.find(s => s.id === sessaoIdFromUrl);
       if (sessao) {
@@ -67,7 +67,7 @@ export default function IngressoForm() {
     setModalMessage('');
     if (modalTitle === "Sucesso!") {
         setFormData({
-            sessaoId: sessaoIdFromUrl, 
+            sessaoId: sessaoIdFromUrl,
             nomeCliente: '',
             cpf: '',
             assento: '',
@@ -88,21 +88,21 @@ export default function IngressoForm() {
         return;
     }
     const novoIngresso: Ingresso = { id: uuidv4(), ...formData };
-    localStorageManager.addIngresso(novoIngresso); 
+    localStorageManager.addIngresso(novoIngresso);
     handleOpenModal("Sucesso!", "Ingresso cadastrado com sucesso!");
   };
 
   if (loading) {
     return <Loader message="Carregando dados da sessão..." />;
   }
-  
+
   const labelClasses = "block text-sm font-medium text-[var(--muted-text)] mb-1";
   const commonInputClasses = "w-full border border-[var(--border-color)] rounded-md p-2 shadow-sm focus:ring-2 focus:ring-[var(--primary-accent)] focus:border-[var(--primary-accent)] bg-[var(--background)] text-[var(--foreground)] placeholder:text-[var(--muted-text)] opacity-90 focus:opacity-100";
 
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto p-4 md:p-0"> {/* Removido p-4 md:p-6 do form, pois a página já tem padding */}
+      <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto">
         <div className="border border-[var(--border-color)] rounded-md p-4 bg-[var(--card-background)] mb-6 space-y-2 shadow-md">
           <p className="text-sm font-medium text-[var(--muted-text)]">
             <strong>Filme:</strong> <span className="text-[var(--foreground)]">{tituloFilme}</span>
@@ -178,14 +178,14 @@ export default function IngressoForm() {
           </select>
         </div>
 
-        <Button type="submit" variant="primary">Confirmar Compra</Button>
+        <Button type="submit" variant="primary" className="w-full">Confirmar Compra</Button>
       </form>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <div className="text-center p-4">
-          <h3 className="text-2xl font-semibold text-[var(--highlight-text)] mb-4">
+          <h3 className="text-xl sm:text-2xl font-semibold text-[var(--highlight-text)] mb-4">
             {modalTitle}
           </h3>
-          <p className="text-[var(--foreground)] mb-6">{modalMessage}</p>
+          <p className="text-[var(--foreground)] mb-6 text-sm sm:text-base">{modalMessage}</p>
           <Button onClick={handleCloseModal} variant="primary" className="min-w-[100px]">
             OK
           </Button>
