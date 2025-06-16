@@ -6,9 +6,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { filmeSchema } from '../../schemas/filmeSchema';
 import { Filme, GeneroFilme, ClassificacaoIndicativa } from '../../interfaces/filme';
 import { v4 as uuidv4 } from 'uuid';
-import { localStorageManager } from '../../lib/localStorageManager';
 import Button from '../buttons/Button';
 import Modal from '../modal/Modal';
+import { api } from '@/services/api';
 
 interface FilmeFormData extends Omit<Filme, 'id' | 'imagemUrl'> {
   imagemArquivo?: FileList;
@@ -28,8 +28,8 @@ export default function FilmeForm({ onFormSuccess }: FilmeFormProps) {
   const [modalMessage, setModalMessage] = useState('');
   const [imagemPreview, setImagemPreview] = useState<string | null>(null);
 
-  const imagemArquivoWatcher = watch('imagemArquivo');
-  useEffect(() => {
+    const imagemArquivoWatcher = watch('imagemArquivo');
+    useEffect(() => {
     if (imagemArquivoWatcher && imagemArquivoWatcher[0]) {
       const file = imagemArquivoWatcher[0];
       const reader = new FileReader();
@@ -42,12 +42,11 @@ export default function FilmeForm({ onFormSuccess }: FilmeFormProps) {
     }
   }, [imagemArquivoWatcher]);
 
-
   const onSubmit = async (data: FilmeFormData) => {
     let imagemBase64 = '';
 
     if (data.imagemArquivo && data.imagemArquivo[0]) {
-      const file = data.imagemArquivo[0];
+        const file = data.imagemArquivo[0];
       const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
       if (!allowedTypes.includes(file.type)) {
         setModalTitle("Erro de Upload");
@@ -61,7 +60,6 @@ export default function FilmeForm({ onFormSuccess }: FilmeFormProps) {
         setIsModalOpen(true);
         return;
       }
-
       try {
         imagemBase64 = await new Promise((resolve, reject) => {
           const reader = new FileReader();
@@ -83,22 +81,29 @@ export default function FilmeForm({ onFormSuccess }: FilmeFormProps) {
         return;
     }
 
-    const { imagemArquivo, ...otherDataFromForm } = data;
-
-    const filmeParaSalvar: Filme = {
-      ...otherDataFromForm,
-      id: uuidv4(),
-      imagemUrl: imagemBase64,
+    const filmeParaSalvar: Omit<Filme, 'id'> = {
+        titulo: data.titulo,
+        descricao: data.descricao,
+        genero: data.genero,
+        classificacao: data.classificacao,
+        duracao: data.duracao,
+        dataEstreia: data.dataEstreia,
+        imagemUrl: imagemBase64,
     };
 
-    localStorageManager.addFilme(filmeParaSalvar);
-
-    setModalTitle("Sucesso!");
-    setModalMessage('Filme salvo com sucesso!');
-    setIsModalOpen(true);
-
-    reset();
-    setImagemPreview(null);
+    try {
+        await api.createFilme(filmeParaSalvar);
+        setModalTitle("Sucesso!");
+        setModalMessage('Filme salvo com sucesso!');
+        setIsModalOpen(true);
+        reset();
+        setImagemPreview(null);
+    } catch (error) {
+        console.error("Erro ao salvar filme:", error);
+        setModalTitle("Erro!");
+        setModalMessage("Não foi possível salvar o filme. Tente novamente.");
+        setIsModalOpen(true);
+    }
   };
 
   const handleCloseModal = () => {

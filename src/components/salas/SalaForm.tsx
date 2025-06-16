@@ -6,9 +6,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { salaSchema } from '../../schemas/salaSchemas';
 import { Sala } from '../../interfaces/sala';
 import { v4 as uuidv4 } from 'uuid';
-import { localStorageManager } from '../../lib/localStorageManager';
 import Button from '../buttons/Button';
 import Modal from '../modal/Modal';
+import { api } from '@/services/api';
 
 interface SalaFormProps {
   onFormSuccess?: () => void;
@@ -23,15 +23,19 @@ export default function SalaForm({ onFormSuccess }: SalaFormProps) {
   const [modalTitle, setModalTitle] = useState('');
   const [modalMessage, setModalMessage] = useState('');
 
-  const onSubmit = (data: Omit<Sala, 'id'>) => {
-    const novaSala: Sala = { ...data, id: uuidv4() };
-    localStorageManager.addSala(novaSala);
-
-    setModalTitle("Sucesso!");
-    setModalMessage('Sala salva com sucesso!');
-    setIsModalOpen(true);
-
-    reset();
+  const onSubmit = async (data: Omit<Sala, 'id'>) => {
+    try {
+        await api.createSala(data);
+        setModalTitle("Sucesso!");
+        setModalMessage('Sala salva com sucesso!');
+        setIsModalOpen(true);
+        reset();
+    } catch(error) {
+        console.error("Erro ao salvar sala:", error);
+        setModalTitle("Erro!");
+        setModalMessage("Não foi possível salvar a sala. Tente novamente.");
+        setIsModalOpen(true);
+    }
   };
 
   const handleCloseModal = () => {

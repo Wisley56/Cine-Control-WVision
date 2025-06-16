@@ -3,13 +3,13 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Sessao } from '@/interfaces/sessao';
-import { localStorageManager } from '@/lib/localStorageManager';
 import { v4 as uuidv4 } from 'uuid';
 import Button from '../buttons/Button';
 import { Sala } from '@/interfaces/sala';
 import { Filme } from '@/interfaces/filme';
 import Loader from '@/components/layout/Loader';
 import Modal from '../modal/Modal';
+import { api } from '@/services/api';
 
 interface SessaoFormProps {
   onSave?: () => void;
@@ -32,11 +32,19 @@ export default function SessaoForm({ onSave }: SessaoFormProps) {
   const [modalTitle, setModalTitle] = useState('');
   const [modalMessage, setModalMessage] = useState('');
 
-  useEffect(() => {
+    useEffect(() => {
     setLoading(true);
-    setFilmes(localStorageManager.getFilmes());
-    setSalas(localStorageManager.getSalas());
-    setLoading(false);
+    Promise.all([
+      api.getFilmes(),
+      api.getSalas()
+    ]).then(([filmesData, salasData]) => {
+      setFilmes(filmesData);
+      setSalas(salasData);
+    }).catch(error => {
+      console.error("Erro ao carregar filmes e salas:", error);
+    }).finally(() => {
+      setLoading(false);
+    });
   }, []);
 
   const resetFormFields = () => {
@@ -69,7 +77,7 @@ export default function SessaoForm({ onSave }: SessaoFormProps) {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!filmeId || !salaId || !dataHora || preco <= 0) {
@@ -77,18 +85,20 @@ export default function SessaoForm({ onSave }: SessaoFormProps) {
         return;
     }
 
-    const novaSessao: Sessao = {
-      id: uuidv4(),
-      filmeId,
-      salaId,
-      dataHora,
-      preco,
-      idioma,
-      formato
-    };
-
-    localStorageManager.addSessao(novaSessao);
-    handleOpenModal("Sucesso!", "Sessão salva com sucesso! Você será redirecionado.");
+    try {
+        await api.createSessao({
+          filmeId,
+          salaId,
+          dataHora,
+          preco,
+          idioma,
+          formato
+        });
+        handleOpenModal("Sucesso!", "Sessão salva com sucesso! Você será redirecionado.");
+    } catch(error) {
+        console.error("Erro ao salvar sessão:", error);
+        handleOpenModal("Erro!", "Não foi possível salvar a sessão.");
+    }
   };
 
   if (loading) {

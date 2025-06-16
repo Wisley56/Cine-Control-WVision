@@ -1,3 +1,6 @@
+import { Filme } from "./filme";
+import { Sala } from "./sala";
+
 export interface Sessao {
   id: string;
   filmeId: string;
@@ -6,4 +9,7 @@ export interface Sessao {
   preco: number;
   idioma: 'Dublado' | 'Legendado'; 
   formato: '2D' | '3D';
+
+  filme?: Filme;
+  sala?: Sala;
 }

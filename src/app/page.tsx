@@ -1,19 +1,26 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { localStorageManager } from '@/lib/localStorageManager';
 import { Filme } from '@/interfaces/filme';
 import FilmeCarousel from '@/components/home/FilmeCarousel';
 import Loader from '@/components/layout/Loader';
+import { api } from '@/services/api';
 
 export default function Home() {
   const [filmes, setFilmes] = useState<Filme[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const todosFilmes = localStorageManager.getFilmes();
-    setFilmes(todosFilmes);
-    setLoading(false);
+useEffect(() => {
+    api.getFilmes()
+      .then(response => {
+        setFilmes(response);
+      })
+      .catch(error => {
+        console.error("Erro ao buscar filmes:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   const mainMinHeight = "min-h-[calc(100vh-68px)]";

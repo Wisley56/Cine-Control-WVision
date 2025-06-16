@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { Filme } from '../../interfaces/filme';
-import { localStorageManager } from '../../lib/localStorageManager';
 import Link from 'next/link';
 import Loader from '../layout/Loader';
+import { api } from '@/services/api';
 
 export default function FilmeList() {
   const [filmes, setFilmes] = useState<Filme[]>([]);
@@ -15,9 +15,17 @@ export default function FilmeList() {
   }, []);
 
   const carregarFilmes = () => {
-    const filmesSalvos = localStorageManager.getFilmes();
-    setFilmes(filmesSalvos);
-    setLoading(false);
+    setLoading(true);
+    api.getFilmes()
+      .then(data => {
+        setFilmes(data);
+      })
+      .catch(error => {
+        console.error("Erro ao carregar filmes:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   if (loading) {

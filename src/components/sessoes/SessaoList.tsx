@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { Sessao } from '../../interfaces/sessao';
 import { Filme } from '../../interfaces/filme';
 import { Sala } from '../../interfaces/sala';
-import { localStorageManager } from '../../lib/localStorageManager';
 import Loader from '../layout/Loader';
 import Button from '../buttons/Button';
 import Link from 'next/link';
 import Modal from '../modal/Modal';
+import { api } from '@/services/api';
 
 export default function SessaoList() {
   const [sessoes, setSessoes] = useState<Sessao[]>([]);
@@ -24,14 +24,13 @@ export default function SessaoList() {
   }, []);
 
   const carregarDados = () => {
-    const sessoesSalvas = localStorageManager.getSessoes();
-    const filmesSalvos = localStorageManager.getFilmes();
-    const salasSalvas = localStorageManager.getSalas();
-
-    setSessoes(sessoesSalvas);
-    setFilmes(filmesSalvos);
-    setSalas(salasSalvas);
-    setLoading(false);
+    setLoading(true);
+    api.getSessoes()
+      .then(data => {
+        setSessoes(data);
+      })
+      .catch(error => console.error("Erro ao carregar sessões:", error))
+      .finally(() => setLoading(false));
   };
 
   const handleOpenConfirmModal = (id: string) => {
@@ -44,10 +43,14 @@ export default function SessaoList() {
     setItemIdToDelete(null);
   };
 
-  const handlePerformDelete = () => {
+  const handlePerformDelete = async () => {
     if (itemIdToDelete) {
-      localStorageManager.deleteSessao(itemIdToDelete);
-      carregarDados();
+        try {
+            await api.deleteSessao(itemIdToDelete);
+            carregarDados(); // Recarrega a lista após a exclusão
+        } catch(error) {
+            console.error("Erro ao excluir sessão:", error);
+        }
     }
     handleCloseConfirmModal();
   };

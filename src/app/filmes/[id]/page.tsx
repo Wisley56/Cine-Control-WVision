@@ -2,11 +2,11 @@
 
 import { useRouter, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { localStorageManager } from '@/lib/localStorageManager';
 import Button from '@/components/buttons/Button';
 import { Filme } from '@/interfaces/filme';
 import Loader from '@/components/layout/Loader';
 import Modal from '@/components/modal/Modal';
+import { api } from '@/services/api';
 
 export default function FilmeDetalhesPage() {
   const router = useRouter();
@@ -16,16 +16,23 @@ export default function FilmeDetalhesPage() {
   const [loading, setLoading] = useState(true);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
-  useEffect(() => {
+useEffect(() => {
     if (!id) {
       setLoading(false);
       return;
     }
     setLoading(true);
-    const filmes = localStorageManager.getFilmes();
-    const encontrado = filmes.find(f => f.id === id);
-    setFilme(encontrado || null);
-    setLoading(false);
+    api.getFilmeById(id)
+      .then(data => {
+        setFilme(data);
+      })
+      .catch(error => {
+        console.error("Filme não encontrado:", error);
+        setFilme(null);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [id]);
 
   const handleOpenDeleteConfirmModal = () => {
@@ -36,11 +43,16 @@ export default function FilmeDetalhesPage() {
     setIsConfirmModalOpen(false);
   };
 
-  const handlePerformDeleteFilme = () => {
+const handlePerformDeleteFilme = async () => {
     if (filme && filme.id) {
-      localStorageManager.deleteFilme(filme.id);
-      handleCloseDeleteConfirmModal();
-      router.push('/filmes');
+      try {
+        await api.deleteFilme(filme.id);
+        handleCloseDeleteConfirmModal();
+        router.push('/filmes');
+      } catch (error) {
+         console.error("Não foi possível excluir o filme:", error);
+         handleCloseDeleteConfirmModal();
+      }
     } else {
       console.error("Não foi possível excluir: filme ou ID do filme não definido.");
       handleCloseDeleteConfirmModal();

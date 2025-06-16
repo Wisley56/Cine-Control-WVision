@@ -1,5 +1,5 @@
 {
-  "name": "wvision-cine-maanager",
+  "name": "wvision-cine-maanager-fe",
   "version": "0.2.0",
   "private": true,
   "scripts": {
@@ -23,6 +23,7 @@
     "swiper": "^11.2.8",
     "uuid": "^11.1.0",
     "wvision-cine-maanager": "file:",
+    "wvision-cine-maanager-fe": "file:",
     "yup": "^1.6.1"
   },
   "devDependencies": {

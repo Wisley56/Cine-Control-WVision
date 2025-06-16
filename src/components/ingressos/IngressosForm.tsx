@@ -3,11 +3,11 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Ingresso } from '@/interfaces/ingresso';
-import { localStorageManager } from '@/lib/localStorageManager';
 import { v4 as uuidv4 } from 'uuid';
 import Button from '@/components/buttons/Button';
 import Loader from '@/components/layout/Loader';
 import Modal from '../modal/Modal';
+import { api } from '@/services/api';
 
 export default function IngressoForm() {
   const searchParams = useSearchParams();
@@ -29,25 +29,23 @@ export default function IngressoForm() {
   const [modalTitle, setModalTitle] = useState('');
   const [modalMessage, setModalMessage] = useState('');
 
-  useEffect(() => {
+useEffect(() => {
     if (sessaoIdFromUrl) {
       setLoading(true);
-      const sessoes = localStorageManager.getSessoes();
-      const filmes = localStorageManager.getFilmes();
-      const salas = localStorageManager.getSalas();
-
-      const sessao = sessoes.find(s => s.id === sessaoIdFromUrl);
-      if (sessao) {
-        const filme = filmes.find(f => f.id === sessao.filmeId);
-        const sala = salas.find(s => s.id === sessao.salaId);
-        setTituloFilme(filme ? filme.titulo : 'Filme não encontrado');
-        setNomeSala(sala ? sala.nome : 'Sala não encontrada');
-        setFormData(prev => ({ ...prev, sessaoId: sessaoIdFromUrl }));
-      } else {
-        setTituloFilme('Sessão não encontrada');
-        setNomeSala('Sessão não encontrada');
-      }
-      setLoading(false);
+      api.getSessaoById(sessaoIdFromUrl)
+        .then(sessao => {
+            setTituloFilme(sessao.filme?.titulo || 'Filme não encontrado');
+            setNomeSala(sessao.sala?.nome || 'Sala não encontrada');
+            setFormData(prev => ({ ...prev, sessaoId: sessaoIdFromUrl }));
+        })
+        .catch(error => {
+            console.error("Sessão não encontrada:", error);
+            setTituloFilme('Sessão não encontrada');
+            setNomeSala('');
+        })
+        .finally(() => {
+            setLoading(false);
+        });
     } else {
       setLoading(false);
       setTituloFilme('Nenhuma sessão selecionada');
@@ -81,15 +79,19 @@ export default function IngressoForm() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.sessaoId) {
         handleOpenModal("Erro!", "ID da Sessão não encontrado. Não é possível registrar o ingresso.");
         return;
     }
-    const novoIngresso: Ingresso = { id: uuidv4(), ...formData };
-    localStorageManager.addIngresso(novoIngresso);
-    handleOpenModal("Sucesso!", "Ingresso cadastrado com sucesso!");
+    try {
+        await api.createIngresso(formData);
+        handleOpenModal("Sucesso!", "Ingresso cadastrado com sucesso!");
+    } catch(error) {
+        console.error("Erro ao vender ingresso:", error);
+        handleOpenModal("Erro!", "Não foi possível realizar a venda.");
+    }
   };
 
   if (loading) {
