@@ -51,7 +51,7 @@ export default function Navbar() {
             color: 'var(--primary-accent)',
           }}
         >
-          WVison Cine Manager
+          WVision Cine Manager
         </Link>
 
         {/* Desktop Menu */}
