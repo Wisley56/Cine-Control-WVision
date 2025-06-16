@@ -3,7 +3,7 @@ import { Sala } from "@/interfaces/sala";
 import { Sessao } from "@/interfaces/sessao";
 import { Ingresso } from "@/interfaces/ingresso";
 
-const BASE_URL = 'http://localhost:3001';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 // Função auxiliar para lidar com as respostas
 async function handleResponse<T>(response: Response): Promise<T> {
